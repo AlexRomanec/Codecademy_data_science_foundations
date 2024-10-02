@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Oct  1 17:51:09 2024
-
+Python exercise to analyse data about category 5 hurricanes, using dictionary manipulation techniques
 @author: alexr
 """
 #%% Hurricane Data
@@ -27,7 +26,7 @@ damages = ['Damages not recorded', '100M', 'Damages not recorded', '40M', '27.9M
 # deaths for each hurricane
 deaths = [90,4000,16,3103,179,184,408,682,5,1023,43,319,688,259,37,11,2068,269,318,107,65,19325,51,124,17,1836,125,87,45,133,603,138,3057,74]
 
-#%% Task 1
+#%% Task 1 - Making the Damages Data Readable
 # Update Recorded Damages
 conversion = {"M": 1000000,
               "B": 1000000000}
@@ -50,24 +49,32 @@ updated_damages = converter(damages)
 # print(updated_damages)
 
 
-#%% Task 2 
+#%% Task 2 - Creating Dictionary of all the Hurricanes
 # Create a Table
 hurricane_dict = {}
 for i in range(34):
   hurricane_dict[names[i]] = {'Name': names[i], 'Month': months[i], 'Year': years[i], 'Max Sustained Wind': max_sustained_winds[i], 'Areas Affected': areas_affected[i], 'Damage': damages[i], 'Deaths': deaths[i]}
 # Create and view the hurricanes dictionary
-# print(hurricane_dict)
+print(hurricane_dict)
 
 
-#%% Task 3
-# Organizing by Year
-# def sort_by_year()
-#   for hurricane in hurricane_dict:
-
+#%% Task 3 - Organizing by Year
+def sort_by_year(hurricane_dict):
+    year_dict = {}
+    for hurricane in hurricane_dict:
+        # print(hurricane_dict[hurricane]['Year'])
+        current_hurricane = hurricane_dict[hurricane]
+        current_year = current_hurricane['Year']
+        # print(current_year)
+        if current_year in year_dict:
+            year_dict[current_year] += [current_hurricane]
+        else:
+            year_dict[current_year] = [current_hurricane]
+    return year_dict
 # create a new dictionary of hurricanes with year and key
+year_dict = sort_by_year(hurricane_dict)
 
-#%% Task 4
-# Counting Damaged Areas
+#%% Task 4 - Counting Damaged Areas
 def area_count(hurricane_dict):
   area_count_dict = {}
   for hurricane in hurricane_dict:
@@ -82,8 +89,7 @@ area_count_dict = area_count(hurricane_dict)
 print(area_count_dict)
 
 
-#%% Task 5 
-# Calculating Maximum Hurricane Count
+#%% Task 5 - Calculating Area with Maximum Hurricane Count
 def max_canes(area_count_dict):
   max_count = 0
   for area in area_count_dict:
@@ -95,14 +101,31 @@ def max_canes(area_count_dict):
 # find most frequently affected area and the number of hurricanes involved in
 max_canes(area_count_dict)
 
-#%% Task 6
-# Calculating the Deadliest Hurricane
-
+#%% Task 6 - Calculating the Deadliest Hurricane
+print(hurricane_dict)
+def highest_mortality(hurricane_dict):
+    highest_deaths = 0
+    for hurricane in hurricane_dict:
+        if hurricane_dict[hurricane]['Deaths'] > highest_deaths:
+            highest_deaths = hurricane_dict[hurricane]['Deaths']
+            most_deadly =  hurricane_dict[hurricane]['Name']
+    print('The most deadly hurricane was {} with {} fatalities'.format(most_deadly,highest_deaths))
 # find highest mortality hurricane and the number of deaths
+highest_mortality(hurricane_dict)
 
-#%% Task 7
-# Rating Hurricanes by Mortality
+#%% Task 7 - Rating Hurricanes by Mortality
+print(hurricane_dict)
+mortality_scale = {0: 0,
+                   1: 100,
+                   2: 500,
+                   3: 1000,
+                   4: 10000}
 
+def rank_by_mortality(hurricane_dict, mortality_scale):
+    mortality_ranking = {}
+    for hurricane in hurricane_dict:
+        deaths = hurricane_dict[hurricane]['Deaths']
+        
 
 # categorize hurricanes in new dictionary with mortality severity as key
 
