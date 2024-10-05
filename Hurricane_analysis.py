@@ -121,14 +121,31 @@ mortality_scale = {0: 0,
                    3: 1000,
                    4: 10000}
 
+def mortality_rank(deaths, mortality_scale):
+    i=4
+    while  mortality_scale[i] > deaths:
+        i -= 1
+    else: 
+        print('Hurricane level {}'.format(i))
+    return i
+
+
 def rank_by_mortality(hurricane_dict, mortality_scale):
     mortality_ranking = {}
     for hurricane in hurricane_dict:
-        deaths = hurricane_dict[hurricane]['Deaths']
+        current_hurricane = hurricane_dict[hurricane]
+        deaths = current_hurricane['Deaths']
+        ranking = mortality_rank(deaths, mortality_scale)
         
+        if ranking in mortality_ranking:
+            mortality_ranking[ranking] += [current_hurricane]
+        else: 
+            mortality_ranking[ranking] = [current_hurricane]
+    return mortality_ranking
 
 # categorize hurricanes in new dictionary with mortality severity as key
-
+mortality_ranked_dict = rank_by_mortality(hurricane_dict, mortality_scale)
+print(mortality_ranked_dict)
 
 #%% Task 8 Calculating Hurricane Maximum Damage
 
