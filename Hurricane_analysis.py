@@ -53,7 +53,7 @@ updated_damages = converter(damages)
 # Create a Table
 hurricane_dict = {}
 for i in range(34):
-  hurricane_dict[names[i]] = {'Name': names[i], 'Month': months[i], 'Year': years[i], 'Max Sustained Wind': max_sustained_winds[i], 'Areas Affected': areas_affected[i], 'Damage': damages[i], 'Deaths': deaths[i]}
+  hurricane_dict[names[i]] = {'Name': names[i], 'Month': months[i], 'Year': years[i], 'Max Sustained Wind': max_sustained_winds[i], 'Areas Affected': areas_affected[i], 'Damage': updated_damages[i], 'Deaths': deaths[i]}
 # Create and view the hurricanes dictionary
 print(hurricane_dict)
 
@@ -148,16 +148,20 @@ mortality_ranked_dict = rank_by_mortality(hurricane_dict, mortality_scale)
 print(mortality_ranked_dict)
 
 #%% Task 8 Calculating Hurricane Maximum Damage
-
+def most_damaging_hurricane(hurricane_dict):
+    most_damaging = 'x'
+    most_damage = 0
+    for hurricane in hurricane_dict:
+        try:             
+            hurricane_name = hurricane_dict[hurricane]['Name']
+            hurricane_damage = int(hurricane_dict[hurricane]['Damage'])
+            if hurricane_damage > most_damage:
+                most_damage = hurricane_damage
+                most_damaging = hurricane_name
+        except ValueError:
+            pass
+    return most_damage, most_damaging
+print(hurricane_dict)
+most_damaging_hurricane(hurricane_dict)
 # find highest damage inducing hurricane and its total cost
 
-
-#%% Task 9
-# Rating Hurricanes by Damage
-damage_scale = {0: 0,
-                1: 100000000,
-                2: 1000000000,
-                3: 10000000000,
-                4: 50000000000}
-  
-# categorize hurricanes in new dictionary with damage severity as key
